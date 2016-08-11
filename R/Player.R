@@ -1,3 +1,5 @@
+#' @title Player class
+#'
 #' @export
 Player <- R6::R6Class(
   classname = "Player",
@@ -23,16 +25,25 @@ Player <- R6::R6Class(
       if (!is.function(self$strat))
         stop("strat must be a function.")
 
-      self$memory <- data.frame(round = 1:mem_size, opponent = NA, opponent_play = NA, score = NA)
+      self$memory <- data.frame(round = 1:mem_size, play = NA, opponent = NA, opponent_play = NA, score = NA)
     },
 
     play = function(opponent, ...) {
       self$strat(..., opponent = opponent, memory = self$memory)
     },
 
-    update = function(opponent, opponent_play, score) {
+    update = function(play, opponent, opponent_play, score) {
       idx <- which(is.na(self$memory$score))[1]
+      self$memory$play[idx] <- play
       self$memory$opponent[idx] <- opponent
+      self$memory$opponent_play[idx] <- opponent_play
+      self$memory$score[idx] <- score
+    },
+
+    reset = function() {
+      self$memory$opponent <- NA
+      self$memory$opponent_play <- NA
+      self$memory$score <- NA
     }
   )
 )
