@@ -106,7 +106,58 @@
 
 }
 
-#' @title Tournament class
+#' @title Tournament Class
+#'
+#' @docType class
+#' @importFrom R6 R6Class
+#' @format \code{\link{R6Class}} object.
+#'
+#' @field type The tournament type ("onetime" or "repeated").
+#'
+#' @field players A list of the different \code{\link{Player}} object competing
+#'  in the tournament.
+#'
+#' @field payoff The payoff matrix of the tournament.
+#'
+#' @field nreps The number of replications of the tournament.
+#'
+#' @field nrounds The number of rounds in each replication of the tournament.
+#'
+#' @field res A data frame of the results of the tournament.
+#'
+#' @section Methods:
+#'  \describe{
+#'    \item{\code{new(type, players, nreps, nrounds, payoff)}}{Create an object
+#'    of clase \code{Tournament}.
+#'      \describe{
+#'        \item{\code{type}}{A character string indicating the type of tournament
+#'          to play: "onetime" for a single encounter tournament; "repeated" for
+#'          a repeated encounter tournament (the default).}
+#'        \item{\code{players}}{A named list of strategies to compete in the
+#'          tournament.}
+#'        \item{\code{nreps}}{A numerical value indicating the number of
+#'          tournament replications to perform (default: 100).}
+#'        \item{\code{nrounds}}{For repeated encounter tournaments only, a
+#'          numerical value indicating the number of rounds of the tournament
+#'          (default: 100).}
+#'        \item{\code{payoff}}{A 2x2 matrix indicating the payoff received by
+#'          the players as a function of their decision and of the decision of
+#'          their opponent (default: \code{matrix(c(3, 5, 0, 1), nrow = 2)}).
+#'          Here the first value indicates the payoff if both players cooperate;
+#'          the second value is the payoff if the player defects and its opponent
+#'          cooperates; the third value is the payoff if the player cooperates
+#'          and its opponent defects; the fourth value is the payoff if both
+#'          players defect.}
+#'      }
+#'    }
+#'    \item{\code{play()}}{This method is used to run the tournament.}
+#'  }
+#'
+#' @return \code{\link{R6Class}} object with methods for running an Axelrod-like
+#'  tournament.
+#'
+#' @examples
+#' # TODO
 #'
 #' @export
 Tournament <- R6::R6Class(
