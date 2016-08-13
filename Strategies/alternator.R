@@ -4,7 +4,9 @@
 #'    1. Alternate between cooperation and defection at each round.
 #'
 alternator <- function(opponent, memory) {
-  if ((nrow(memory) %% 2) == 0) {
+  l <- nrow(memory) - sum(is.na(memory$play))
+
+  if ((l %% 2) == 0) {
     "C"
   } else {
     "D"
