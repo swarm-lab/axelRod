@@ -24,6 +24,6 @@ strats <- do.call(rbind, lapply(strat_files, function(x) {
 
 
 # define global variables
-counter <- 0
-steps <- 0
+counter <- 1
+steps <- 1
 dat <- data.frame(rep = 1, player = c("Player 1", "Player 2"), cum_score = 0)
