@@ -113,6 +113,7 @@ Player <- R6::R6Class(
     },
 
     reset = function() {
+      self$memory$play <- NA
       self$memory$opponent <- NA
       self$memory$opponent_play <- NA
       self$memory$score <- NA
