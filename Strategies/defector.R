@@ -1,7 +1,7 @@
 #' @title Defector
 #'
 #' @description Strategy rules:
-#'    1. Defect systematically.
+#'    1. Defects systematically.
 #'
 defector <- function(opponent, memory) {
   "D"

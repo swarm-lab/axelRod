@@ -1,9 +1,9 @@
 #' @title Punisher
 #'
 #' @description Strategy rules:
-#'    1. Cooperate the first time you play a new opponent.
-#'    2. Defect as soon as the opponent defects.
-#'    3. Cooperate again after a time proportional to the number of times the
+#'    1. Cooperates the first time you play a new opponent.
+#'    2. Defects as soon as the opponent defects.
+#'    3. Cooperates again after a time proportional to the number of times the
 #'      opponent chose to defect.
 #'
 punisher <- function(opponent, memory) {

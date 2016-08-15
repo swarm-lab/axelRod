@@ -1,7 +1,7 @@
 #' @title Alternator
 #'
 #' @description Strategy rules:
-#'    1. Alternate between cooperation and defection at each round.
+#'    1. Alternates between cooperation and defection at each round.
 #'
 alternator <- function(opponent, memory) {
   l <- nrow(memory) - sum(is.na(memory$play))

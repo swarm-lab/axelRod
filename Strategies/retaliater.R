@@ -1,7 +1,7 @@
 #' @title Retaliater
 #'
 #' @description Strategy rules:
-#'    1. Cooperate the first time you play a new opponent.
+#'    1. Cooperates the first time you play a new opponent.
 #'    2. If the opponent has played "D" to my "C" more often than 10% of the
 #'        time that I've done the same to him, play "D". Otherwise, play "C".
 #'
