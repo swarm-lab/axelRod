@@ -1,7 +1,7 @@
 #' @title Punisher
 #'
 #' @description Strategy rules:
-#'    1. Cooperates the first time you play a new opponent.
+#'    1. Cooperates the first time it plays a new opponent.
 #'    2. Defects as soon as the opponent defects.
 #'    3. Cooperates again after a time proportional to the number of times the
 #'      opponent chose to defect.

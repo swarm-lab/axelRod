@@ -1,7 +1,7 @@
 #' @title Tit-For-Tat
 #'
 #' @description Strategy rules:
-#'    1. Cooperates the first time you play a new opponent.
+#'    1. Cooperates the first time it plays a new opponent.
 #'    2. Mirrors the last move of each opponent in subsequent encounters.
 #'
 titfortat <- function(opponent, memory) {
