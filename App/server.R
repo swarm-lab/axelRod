@@ -54,6 +54,6 @@ shinyServer(function(input, output) {
     add_axis("y", title = "y", orient = "right", properties = axis_props(
       labels = list(fontSize = 16),
       title = list(fontSize = 20, stroke = "#f5f5f5", fill = "#f5f5f5"))) %>%
-    set_options(width = "auto", height = "450px", resizable = FALSE, duration = 60) %>%
+    set_options(width = "auto", height = "450px", resizable = FALSE, duration = 30) %>%
     bind_shiny("display")
 })
