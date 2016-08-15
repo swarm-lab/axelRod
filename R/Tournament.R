@@ -190,7 +190,7 @@ Tournament <- R6::R6Class(
         stop("All players must be named.")
 
       self$nreps <- nreps
-      self$nrounds <- nrounds
+      self$nrounds <- ifelse(self$type == "onetime", 1, nrounds)
       self$payoff <- payoff
 
       self$players <- c()
