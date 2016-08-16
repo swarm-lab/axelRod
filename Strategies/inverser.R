@@ -2,7 +2,7 @@
 #'
 #' @description Strategy rules:
 #'    1. Cooperates the first time it plays a new opponent.
-#'    1. Defects with a probability that diminishes relative to how
+#'    2. Defects with a probability that diminishes relative to how
 #'      long ago the opponent last defected.
 #'
 inverser <- function(opponent, memory) {
