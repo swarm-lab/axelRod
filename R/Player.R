@@ -99,7 +99,8 @@ Player <- R6::R6Class(
       if (!is.function(self$strat))
         stop("strat must be a function.")
 
-      self$memory <- data.frame(round = 1:mem_size, play = NA, opponent = NA, opponent_play = NA, score = NA)
+      self$memory <- data.frame(round = 1:mem_size, play = NA, opponent = NA,
+                                opponent_play = NA, score = NA, opponent_score = NA)
     },
 
     play = function(opponent, ...) {
@@ -112,7 +113,7 @@ Player <- R6::R6Class(
       self$memory$opponent[idx] <- opponent
       self$memory$opponent_play[idx] <- opponent_play
       self$memory$score[idx] <- score
-      self$memory$score[idx] <- opponent_score
+      self$memory$opponent_score[idx] <- opponent_score
     },
 
     reset = function() {
