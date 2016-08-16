@@ -5,8 +5,8 @@
 #'
 majorityPlayer <- function(opponent, memory) {
   idx <- which(memory$opponent == opponent)
-  n_d <- sum(memory$opponent_play == "D")
-  n_c <- sum(memory$opponent_play == "C")
+  n_d <- sum(memory$opponent_play[idx] == "D")
+  n_c <- sum(memory$opponent_play[idx] == "C")
 
   if (n_d > n_c) {
     "D"
