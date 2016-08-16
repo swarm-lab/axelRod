@@ -1,4 +1,4 @@
-#' @title Thue-Morse sequencer
+#' @title Thue-Morse Sequencer
 #'
 #' @description Strategy rules:
 #'    1. Cooperates or defects according to the Thue-Morse sequence (binary
