@@ -73,6 +73,8 @@ must take 2 arguments:
          ("C" for cooperate; "D" for defect).}
        \item{score}{A numerical value indicating the payoff received at the
          current round.}
+       \item{opponent_score}{A numerical value indicating the payoff received
+         by the opponent at the current round.}
      }
    }
    \item{\code{reset()}}{Reset the player's memory.}

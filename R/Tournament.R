@@ -82,8 +82,8 @@
           }
         }
 
-        players[[plays[j, 1]]]$update(p1, players[[plays[j, 2]]]$name, p2, sc1)
-        players[[plays[j, 2]]]$update(p2, players[[plays[j, 1]]]$name, p1, sc2)
+        players[[plays[j, 1]]]$update(p1, players[[plays[j, 2]]]$name, p2, sc1, sc2)
+        players[[plays[j, 2]]]$update(p2, players[[plays[j, 1]]]$name, p1, sc2, sc1)
         pb$tick()
       }
 

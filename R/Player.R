@@ -61,6 +61,8 @@
 #'          ("C" for cooperate; "D" for defect).}
 #'        \item{score}{A numerical value indicating the payoff received at the
 #'          current round.}
+#'        \item{opponent_score}{A numerical value indicating the payoff received
+#'          by the opponent at the current round.}
 #'      }
 #'    }
 #'    \item{\code{reset()}}{Reset the player's memory.}
@@ -104,12 +106,13 @@ Player <- R6::R6Class(
       self$strat(..., opponent = opponent, memory = self$memory)
     },
 
-    update = function(play, opponent, opponent_play, score) {
+    update = function(play, opponent, opponent_play, score, opponent_score) {
       idx <- which(is.na(self$memory$score))[1]
       self$memory$play[idx] <- play
       self$memory$opponent[idx] <- opponent
       self$memory$opponent_play[idx] <- opponent_play
       self$memory$score[idx] <- score
+      self$memory$score[idx] <- opponent_score
     },
 
     reset = function() {
@@ -117,6 +120,7 @@ Player <- R6::R6Class(
       self$memory$opponent <- NA
       self$memory$opponent_play <- NA
       self$memory$score <- NA
+      self$memory$opponent_score <- NA
     }
   )
 )
