@@ -10,5 +10,6 @@ License: GPL-3
 LazyData: TRUE
 Imports:
   R6,
-  progress
+  progress,
+  shiny
 RoxygenNote: 5.0.1
