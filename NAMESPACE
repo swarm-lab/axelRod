@@ -2,4 +2,5 @@
 
 export(Player)
 export(Tournament)
+export(shiny_tournament)
 importFrom(R6,R6Class)
