@@ -11,5 +11,7 @@ LazyData: TRUE
 Imports:
   R6,
   progress,
-  shiny
+  shiny,
+  dplyr,
+  ggvis
 RoxygenNote: 5.0.1
