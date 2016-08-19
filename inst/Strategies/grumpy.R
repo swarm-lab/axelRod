@@ -30,7 +30,7 @@ grumpy <- function(opponent, memory, A = 0.5, B = 0.3, increment = 0.1, max_grum
   } else if (grump >= A) {
     "D"
   } else {
-    last_play <- memory$play[nrow(memory) - sum(is.na(memory$play[idx]))]
+    last_play <- memory$play[tail(idx, 1)]
 
     if (length(last_play) == 0)
       last_play <- "C"
