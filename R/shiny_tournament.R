@@ -28,46 +28,66 @@ shiny_tournament <- function(custom_strategies = NULL, with_default_strategies =
   dat <- data.frame(rep = 1, player = c("Player 1", "Player 2"), cum_score = 0)
 
   shinyApp(
-    ui = fluidPage(
+    ui = navbarPage(
+      title = "Axelrod Tournament",
+      theme = "www/bootstrap.css",
+      fluid = FALSE,
+      collapsible = TRUE,
 
-      fluidRow(
+      tabPanel("Tournament",
 
-        column(width = 3, align = "center", style = "background-color:#ebb397;",
-               div(style = "height:450px;",
-                   selectInput("strat1", label = h5("Player 1's Strategy"),
-                               choices = lapply(strats, function(x) x$name),
-                               selected = 1))),
+               fluidRow(
 
-        column(width = 6, align = "center", style = "background-color:#f5f5f5;",
-               ggvisOutput("display")),
+                 column(width = 3, align = "center", style = "background-color:#ebb397;",
+                        div(style = "height:450px;",
+                            selectInput("strat1", label = h5("Player 1's Strategy"),
+                                        choices = lapply(strats, function(x) x$name),
+                                        selected = 1),
+                            tags$hr(),
+                            verbatimTextOutput("strat1"))),
 
-        column(width = 3, align = "center", style = "background-color:#9ecfbf;",
-               div(style = "height:450px;",
-                   selectInput("strat2", label = h5("Player 2's Strategy"),
-                               choices = lapply(strats, function(x) x$name),
-                               selected = 1)))
+                 column(width = 6, align = "center", style = "background-color:#f5f5f5;",
+                        ggvisOutput("display")),
+
+                 column(width = 3, align = "center", style = "background-color:#9ecfbf;",
+                        div(style = "height:450px;",
+                            selectInput("strat2", label = h5("Player 2's Strategy"),
+                                        choices = lapply(strats, function(x) x$name),
+                                        selected = 1),
+                            tags$hr(),
+                            verbatimTextOutput("strat2")))
+               ),
+
+               fluidRow(style = "background-color:#f5f5f5;",
+
+                        column(width = 2, align = "center", offset = 2,
+                               selectInput("tournament", label = h5("Tournament type"),
+                                           choices = list("One time" = "onetime", "Repeated" = "repeated"),
+                                           selected = 1)),
+
+                        column(width = 2, align = "center",
+                               uiOutput("rounds")),
+
+                        column(width = 2, align = "center",
+                               sliderInput("reps", label = h5("Number of replicates"), min = 1,
+                                           max = 100, value = 20)),
+
+                        column(width = 2, align = "center",
+                               h5(HTML("&nbsp;")),
+                               actionButton("play", "Play", width = "100%"))
+               )
       ),
 
-      fluidRow(style = "background-color:#f5f5f5;",
+      tabPanel("Instructions"),
 
-               column(width = 2, align = "center", offset = 2,
-                      selectInput("tournament", label = h5("Tournament type"),
-                                  choices = list("One time" = "onetime", "Repeated" = "repeated"),
-                                  selected = 1)),
+      tabPanel("About"),
 
-               column(width = 2, align = "center",
-                      sliderInput("rounds", label = h5("Number of rounds"), min = 1,
-                                  max = 100, value = 20)),
-
-               column(width = 2, align = "center",
-                      sliderInput("reps", label = h5("Number of replicates"), min = 1,
-                                  max = 100, value = 20)),
-
-               column(width = 2, align = "center",
-                      h5(HTML("&nbsp;")),
-                      actionButton("play", "Play", width = "100%"))
+      tabPanel(tagList(tags$html("Powered by"),
+                       tags$img(src = "www/white-rstudio-logo.png",
+                                height = "20")),
+               value = "RStudio",
+               tags$head(tags$script(src = "www/actions.js"))
       )
-
     ),
 
     server = function(input, output) {
@@ -91,6 +111,26 @@ shiny_tournament <- function(custom_strategies = NULL, with_default_strategies =
         dat %>% filter(rep == counter - 1)
       })
 
+      output$strat1 <- renderText({
+        idx <- which(sapply(strats, function(x, y) x$name == y, y = input$strat1))
+        strats[[idx]]$description
+      })
+
+      output$strat2 <- renderText({
+        idx <- which(sapply(strats, function(x, y) x$name == y, y = input$strat2))
+        strats[[idx]]$description
+      })
+
+      output$rounds <- renderUI({
+        if (input$tournament == "onetime") {
+          sliderInput("rounds", label = h5("Number of rounds"), min = 1,
+                      max = 1, value = 1)
+        } else {
+          sliderInput("rounds", label = h5("Number of rounds"), min = 1,
+                      max = 100, value = 20)
+        }
+      })
+
       observe({
         if (input$play > 0) {
           isolate({
@@ -104,7 +144,7 @@ shiny_tournament <- function(custom_strategies = NULL, with_default_strategies =
 
             dat <<- group_by(tournament$res, player, rep) %>%
               summarize(score = sum(score)) %>%
-              mutate(cum_score = cumsum(score))
+              mutate(cum_score = cumsum(score) / rep)
 
             react$reset_draw <- react$reset_draw + 1
           })

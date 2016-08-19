@@ -1,7 +1,10 @@
 .getStrategy <- function(path) {
   tmp <- roxygen2:::parse_file(path, .GlobalEnv)
+  desc <- gsub("\n  ", "", tmp[[1]]$description)
+  desc <- gsub("   ", " ", desc)
+  desc <- gsub("(\\d\\.)", "\n\\1", desc)
   list(name = tmp[[1]]$title,
-       description = tmp[[1]]$description,
+       description = desc,
        fn = eval(parse(path)))
 }
 
