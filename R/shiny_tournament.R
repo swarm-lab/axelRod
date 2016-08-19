@@ -5,11 +5,22 @@
   paste0("Score: ", x$stack_upr)
 }
 
+
+#'
+#'
 #' @export
 #'
 shiny_tournament <- function(custom_strategies = NULL, with_default_strategies = TRUE) {
   # load strategies in memory
-  strats <- defaultStrategies()
+  if (is.null(custom_strategies)) {
+    strats <- defaultStrategies()
+  } else {
+    strats <- custom_strategies
+
+    if (with_default_strategies) {
+      strats <- c(strats, defaultStrategies())
+    }
+  }
 
   # define global variables
   counter <- 1
