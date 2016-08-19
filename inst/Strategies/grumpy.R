@@ -10,17 +10,19 @@
 #'
 grumpy <- function(opponent, memory, A = 0.5, B = 0.3, increment = 0.1, max_grump = 1) {
   idx <- which(memory$opponent == opponent)
-  memory$opponent_play[idx]
 
   grump <- 0
-  for (i in 1:length(memory$opponent_play[idx])) {
-    grump <- grump + ifelse(memory$opponent_play[idx][i] == "D", increment, -increment)
 
-    if (grump > max_grump)
-      grump <- max_grump
+  if (length(idx) > 1) {
+    for (i in 1:length(memory$opponent_play[idx])) {
+      grump <- grump + ifelse(memory$opponent_play[idx][i] == "D", increment, -increment)
 
-    if (grump < 0)
-      grump <- 0
+      if (grump > max_grump)
+        grump <- max_grump
+
+      if (grump < 0)
+        grump <- 0
+    }
   }
 
   if (grump <= B) {
