@@ -1,6 +1,121 @@
+.all_values <- function(x) {
+  if (is.null(x))
+    return(NULL)
+
+  paste0("Score: ", x$stack_upr)
+}
+
 #' @export
 #'
-shiny_tournament <- function() {
-  app_path <- paste0(find.package("axelRod"), "/App/")
-  shiny::runApp(app_path)
+shiny_tournament <- function(custom_strategies = NULL, with_default_strategies = TRUE) {
+  # load strategies in memory
+  strats <- defaultStrategies()
+
+  # define global variables
+  counter <- 1
+  steps <- 1
+  dat <- data.frame(rep = 1, player = c("Player 1", "Player 2"), cum_score = 0)
+
+  shinyApp(
+    ui = fluidPage(
+
+      fluidRow(
+
+        column(width = 3, align = "center", style = "background-color:#ebb397;",
+               div(style = "height:450px;",
+                   selectInput("strat1", label = h5("Player 1's Strategy"),
+                               choices = lapply(strats, function(x) x$name),
+                               selected = 1))),
+
+        column(width = 6, align = "center", style = "background-color:#f5f5f5;",
+               ggvisOutput("display")),
+
+        column(width = 3, align = "center", style = "background-color:#9ecfbf;",
+               div(style = "height:450px;",
+                   selectInput("strat2", label = h5("Player 2's Strategy"),
+                               choices = lapply(strats, function(x) x$name),
+                               selected = 1)))
+      ),
+
+      fluidRow(style = "background-color:#f5f5f5;",
+
+               column(width = 2, align = "center", offset = 2,
+                      selectInput("tournament", label = h5("Tournament type"),
+                                  choices = list("One time" = "onetime", "Repeated" = "repeated"),
+                                  selected = 1)),
+
+               column(width = 2, align = "center",
+                      sliderInput("rounds", label = h5("Number of rounds"), min = 1,
+                                  max = 100, value = 20)),
+
+               column(width = 2, align = "center",
+                      sliderInput("reps", label = h5("Number of replicates"), min = 1,
+                                  max = 100, value = 20)),
+
+               column(width = 2, align = "center",
+                      h5(HTML("&nbsp;")),
+                      actionButton("play", "Play", width = "100%"))
+      )
+
+    ),
+
+    server = function(input, output) {
+      react <- reactiveValues(reset_draw = 0, draw = 0)
+
+      observe({
+        react$reset_draw
+        counter <<- 1
+        steps <<- max(dat$rep)
+        isolate({ react$draw <- react$draw + 1 })
+      })
+
+      react_dat <- reactive({
+        react$draw
+
+        if (counter <= steps) {
+          counter <<- counter + 1
+          invalidateLater(60, NULL)
+        }
+
+        dat %>% filter(rep == counter - 1)
+      })
+
+      observe({
+        if (input$play > 0) {
+          isolate({
+            idx1 <- which(sapply(strats, function(x, y) x$name == y, y = input$strat1))
+            idx2 <- which(sapply(strats, function(x, y) x$name == y, y = input$strat2))
+            tournament <- Tournament$new(type = input$tournament,
+                                         players = list("Player 1" = strats[[idx1]]$fn,
+                                                        "Player 2" = strats[[idx2]]$fn),
+                                         nreps = input$reps, nrounds = input$rounds)
+            tournament$play()
+
+            dat <<- group_by(tournament$res, player, rep) %>%
+              summarize(score = sum(score)) %>%
+              mutate(cum_score = cumsum(score))
+
+            react$reset_draw <- react$reset_draw + 1
+          })
+        }
+      })
+
+      react_dat %>%
+        ggvis(x = ~player, y = ~cum_score, fill = ~player, stroke = ~player) %>%
+        layer_bars() %>%
+        scale_nominal("fill", range = c("#ebb397", "#9ecfbf")) %>%
+        scale_nominal("stroke", range = c("#ebb397", "#9ecfbf")) %>%
+        hide_legend(c("fill", "stroke")) %>%
+        add_tooltip(.all_values, "hover") %>%
+        add_axis("x", title = "", properties = axis_props(labels = list(fontSize = 18))) %>%
+        add_axis("y", title = "y", properties = axis_props(
+          labels = list(fontSize = 16),
+          title = list(fontSize = 20, stroke = "#f5f5f5", fill = "#f5f5f5"))) %>%
+        add_axis("y", title = "y", orient = "right", properties = axis_props(
+          labels = list(fontSize = 16),
+          title = list(fontSize = 20, stroke = "#f5f5f5", fill = "#f5f5f5"))) %>%
+        set_options(width = "auto", height = "450px", resizable = FALSE, duration = 30) %>%
+        bind_shiny("display")
+    }
+  )
 }
