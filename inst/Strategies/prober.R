@@ -2,7 +2,7 @@
 #'
 #' @description Strategy rules:
 #'    1. Plays "D", "C", "C" initially.
-#'    2. Defects forever if opponent cooperated in moves 2 and 3.
+#'    2. Defects forever if opponent cooperated in moves two and three.
 #'    3. Otherwise plays tit-for-tat.
 #'
 prober <- function(opponent, memory) {
