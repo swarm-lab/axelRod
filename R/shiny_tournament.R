@@ -10,7 +10,13 @@
 #'
 #' @export
 #'
-shiny_tournament <- function(custom_strategies = NULL, with_default_strategies = TRUE) {
+shiny_tournament <- function(payoff = matrix(c(3, 5, 0, 1), nrow = 2),
+                             custom_strategies = NULL,
+                             with_default_strategies = TRUE) {
+  require(shiny)
+  require(dplyr)
+  require(ggvis)
+
   # load strategies in memory
   if (is.null(custom_strategies)) {
     strats <- defaultStrategies()
@@ -139,7 +145,8 @@ shiny_tournament <- function(custom_strategies = NULL, with_default_strategies =
             tournament <- Tournament$new(type = input$tournament,
                                          players = list("Player 1" = strats[[idx1]]$fn,
                                                         "Player 2" = strats[[idx2]]$fn),
-                                         nreps = input$reps, nrounds = input$rounds)
+                                         nreps = input$reps, nrounds = input$rounds,
+                                         payoff = payoff)
             tournament$play()
 
             dat <<- group_by(tournament$res, player, rep) %>%
