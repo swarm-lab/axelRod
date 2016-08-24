@@ -86,7 +86,45 @@ shiny_tournament <- function(payoff = matrix(c(3, 5, 0, 1), nrow = 2),
 
       tabPanel("Instructions"),
 
-      tabPanel("About"),
+      tabPanel("About",
+
+               fluidRow(
+                 tags$hr(),
+
+                 p(strong("Author:"), " Simon Garnier (", a("New Jersey Institute of Technology",
+                                                            href = "http://www.njit.edu",
+                                                            target = "_blank"), ")"),
+
+                 p(strong("Twitter:"), a("@sjmgarnier",
+                                         href = "https://twitter.com/sjmgarnier",
+                                         target = "_blank")),
+
+                 p(strong("Website:"), a("http://www.theswarmlab.com",
+                                         href = "http://www.theswarmlab.com",
+                                         target = "_blank")),
+
+                 p(strong("Source code:"),
+                   a("GitHub",
+                     href = "https://github.com/swarm-lab/axelRod",
+                     target = "_blank")),
+
+                 p(strong("Created with:"),
+                   a("RStudio",
+                     href = "http://www.rstudio.com/",
+                     target = "_blank"),
+                   " and ",
+                   a("Shiny.",
+                     href = "http://shiny.rstudio.com",
+                     target = "_blank")),
+
+                 p(strong("License:"),
+                   a("GPL v3",
+                     href = "http://www.gnu.org/copyleft/gpl.html",
+                     target = "_blank")),
+
+                 tags$hr()
+               )
+      ),
 
       tabPanel(tagList(tags$html("Powered by"),
                        tags$img(src = "www/white-rstudio-logo.png",
