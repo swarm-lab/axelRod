@@ -84,5 +84,8 @@ must take 2 arguments:
 # TODO
 
 }
+\author{
+Simon Garnier, \email{garnier@njit.edu}
+}
 \keyword{datasets}
 

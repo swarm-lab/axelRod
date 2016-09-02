@@ -6,7 +6,27 @@
 }
 
 
+#' @title Axelrod Tournament Shiny App
 #'
+#' @description This function launches a Shiny app to run "Prisoner's Dilemma"
+#'  matches between pairs of strategies.
+#'
+#' @param payoff A 2x2 payoff matrix of the tournament.
+#'
+#' @param custom_strategies A list of custom strategies, following the model of
+#'  the list returned by \code{\link{defaultStrategies}}.
+#'
+#' @param with_default_strategies If TRUE, the tournament app uses the default
+#'  strategies returned by \code{\link{defaultStrategies}} (the default), in
+#'  addition of any custom strategy provided by the user. If FALSE, it uses only
+#'  the custom strategies provided by the user.
+#'
+#' @return This function launches a Shiny application.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' # TODO
 #'
 #' @export
 #'

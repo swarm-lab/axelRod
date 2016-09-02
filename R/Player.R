@@ -71,6 +71,8 @@
 #' @return \code{\link{R6Class}} object with methods for a player in an
 #'  Axelrod-like tournament.
 #'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
 #' @examples
 #' # TODO
 #'

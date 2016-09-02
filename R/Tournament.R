@@ -117,7 +117,7 @@
 #' @field players A list of the different \code{\link{Player}} object competing
 #'  in the tournament.
 #'
-#' @field payoff The payoff matrix of the tournament.
+#' @field payoff A 2x2 payoff matrix of the tournament.
 #'
 #' @field nreps The number of replications of the tournament.
 #'
@@ -155,6 +155,8 @@
 #'
 #' @return \code{\link{R6Class}} object with methods for running an Axelrod-like
 #'  tournament.
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
 #'
 #' @examples
 #' # TODO

@@ -8,6 +8,23 @@
        fn = eval(parse(path)))
 }
 
+#' @title Strategies Provided with the \code{axelRod} Package
+#'
+#' @description This function returns a list of strategies that can be used to
+#'  run an Axelrod-like game theory tournament.
+#'
+#' @return A list of lists. Each sublist will have three elements:
+#'  \describe{
+#'    \item{name}{A character string giving the name of the strategy.}
+#'    \item{description}{A character string describing the strategy.}
+#'    \item{fn}{The function implementing the strategy.}
+#'  }
+#'
+#' @author Simon Garnier, \email{garnier@@njit.edu}
+#'
+#' @examples
+#' # TODO
+#'
 #' @export
 #'
 defaultStrategies <- function() {

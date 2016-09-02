@@ -20,7 +20,7 @@ Tournament
 \item{\code{players}}{A list of the different \code{\link{Player}} object competing
 in the tournament.}
 
-\item{\code{payoff}}{The payoff matrix of the tournament.}
+\item{\code{payoff}}{A 2x2 payoff matrix of the tournament.}
 
 \item{\code{nreps}}{The number of replications of the tournament.}
 
@@ -60,6 +60,9 @@ in the tournament.}
 \examples{
 # TODO
 
+}
+\author{
+Simon Garnier, \email{garnier@njit.edu}
 }
 \keyword{datasets}
 
